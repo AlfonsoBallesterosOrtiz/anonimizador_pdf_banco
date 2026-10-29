@@ -14,6 +14,14 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Inicializar clave de sesión para poder resetear el uploader fácilmente
+if "uploader_key" not in st.session_state:
+    st.session_state["uploader_key"] = 0
+
+def reiniciar_archivo():
+    st.session_state["uploader_key"] += 1
+    st.rerun()
+
 # Constantes y expresiones regulares
 RE_RFC = re.compile(r"^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$", re.IGNORECASE)
 RE_EMAIL = re.compile(r"^[\w.+-]+@[\w-]+(\.[\w-]+)+$")
@@ -125,12 +133,20 @@ st.info(
     """
 )
 
+# File uploader con clave dinámica ligada al botón de borrado
 archivo_pdf = st.file_uploader(
     "Arroja tu estado de cuenta PDF aquí (¡sin miedo al éxito!):",
-    type=["pdf"]
+    type=["pdf"],
+    key=f"pdf_uploader_{st.session_state['uploader_key']}"
 )
 
+# Botón para borrar/expulsar el archivo
 if archivo_pdf:
+    col_del_1, col_del_2 = st.columns([1, 4])
+    with col_del_1:
+        if st.button("🗑️ Desechar PDF y limpiar", use_container_width=True):
+            reiniciar_archivo()
+
     with st.spinner("🧙‍♂️ Pasando el marcador negro digital... ¡Abracadabra!..."):
         cuenta = {"numero_largo": 0, "rfc": 0, "correo": 0, "nombre": 0}
         paginas = []
