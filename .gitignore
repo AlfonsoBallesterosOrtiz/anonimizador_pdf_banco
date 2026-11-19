@@ -1,4 +1,9 @@
 __pycache__/ 
 venv/ 
 .env 
-*.pdf 
+*.pdf
+appv1.0.py
+appv2.0.py 
+Copy App v1.0.md
+copy_trafico.md
+palete.txt
