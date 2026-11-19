@@ -45,7 +45,7 @@ def aplicar_estilos() -> None:
             --shadow-pop: 0 10px 28px rgba(7, 42, 200, 0.12);
         }
 
-        /* 1. Lienzo principal y tipografía base */
+        /* 1. Lienzo principal y tipografía base (sin pisar iconos Material Symbols) */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stMain"] {
             background-color: var(--color-paper) !important;
             color: var(--color-body-text) !important;
@@ -84,8 +84,26 @@ def aplicar_estilos() -> None:
             letter-spacing: -0.025em !important;
         }
 
-        p, span, label, div, li {
+        p, label, li,
+        [data-testid="stMarkdownContainer"] span,
+        [data-testid="stText"] {
             font-family: var(--font-principal) !important;
+        }
+
+        /* Preservar fuente nativa de iconos de Streamlit (evita textos encimados como 'upload' o '_arrow_right') */
+        [data-testid="stIconMaterial"],
+        span[translate="no"],
+        .material-symbols-rounded,
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', sans-serif !important;
+            font-weight: normal !important;
+            font-style: normal !important;
+            letter-spacing: normal !important;
+            text-transform: none !important;
+            white-space: nowrap !important;
+            word-wrap: normal !important;
+            direction: ltr !important;
+            -webkit-font-smoothing: antialiased !important;
         }
 
         /* 4. Banner Hero superior / Píldora Modo Ninja */
@@ -99,6 +117,7 @@ def aplicar_estilos() -> None:
         .ninja-pill {
             background-color: var(--color-persian-blue);
             color: var(--color-bright-lemon) !important;
+            font-family: var(--font-principal) !important;
             font-weight: 900;
             font-size: 12px;
             letter-spacing: 0.06em;
@@ -111,6 +130,7 @@ def aplicar_estilos() -> None:
             background-color: var(--color-surface-ice);
             color: var(--color-persian-blue) !important;
             border: 1px solid var(--color-icy-blue);
+            font-family: var(--font-principal) !important;
             font-weight: 700;
             font-size: 12.5px;
             padding: 5px 14px;
@@ -130,6 +150,7 @@ def aplicar_estilos() -> None:
             border: 1.5px solid var(--color-icy-blue);
             border-radius: 18px;
             padding: 16px 18px;
+            font-family: var(--font-principal) !important;
         }
         .step-num {
             display: inline-flex;
@@ -182,6 +203,7 @@ def aplicar_estilos() -> None:
             background-color: var(--color-paper) !important;
             color: var(--color-ink-dark) !important;
             -webkit-text-fill-color: var(--color-ink-dark) !important;
+            font-family: var(--font-principal) !important;
             border-radius: var(--radius-input) !important;
         }
 
@@ -200,12 +222,12 @@ def aplicar_estilos() -> None:
             opacity: 0.8 !important;
         }
 
-        /* 8. File Uploader llamativo estilo Dropzone */
+        /* 8. File Uploader estilo Dropzone (sin duplicar ni encimar texto) */
         [data-testid="stFileUploader"] section {
             background-color: var(--color-surface-ice) !important;
             border: 2.5px dashed var(--color-dodger-blue) !important;
             border-radius: var(--radius-card) !important;
-            padding: 1.6rem !important;
+            padding: 1.4rem !important;
             transition: all 0.2s ease !important;
         }
 
@@ -215,12 +237,23 @@ def aplicar_estilos() -> None:
         }
 
         [data-testid="stFileUploader"] section button {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
             background-color: var(--color-bright-lemon) !important;
             color: var(--color-ink-dark) !important;
             border: 1.5px solid var(--color-ink-dark) !important;
             border-radius: var(--radius-pill) !important;
+            font-family: var(--font-principal) !important;
             font-weight: 800 !important;
-            padding: 0.45rem 1.2rem !important;
+            font-size: 14px !important;
+            padding: 0.5rem 1.25rem !important;
+            white-space: nowrap !important;
+        }
+
+        [data-testid="stFileUploader"] section button:hover {
+            background-color: var(--color-school-bus) !important;
         }
 
         /* 9. Botones y Download Buttons (Estilo Pill Wise con Bright Lemon & Persian Blue) */
@@ -289,7 +322,6 @@ def aplicar_estilos() -> None:
         }
 
         div[data-testid="stAlert"] p,
-        div[data-testid="stAlert"] span,
         div[data-testid="stAlert"] strong,
         div[data-testid="stAlert"] li,
         div[data-testid="stAlert"] h3 {
@@ -332,24 +364,51 @@ def aplicar_estilos() -> None:
             background: transparent !important;
         }
 
-        /* 13. Expanders (Preguntas frecuentes) */
+        /* 13. Expanders (Preguntas frecuentes sin encimamiento de flecha y texto) */
         [data-testid="stExpander"] {
             background-color: var(--color-paper) !important;
             border: 1.5px solid var(--color-icy-blue) !important;
             border-radius: 16px !important;
-            margin-bottom: 0.65rem !important;
+            margin-bottom: 0.7rem !important;
             overflow: hidden !important;
         }
 
         [data-testid="stExpander"] summary {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
             background-color: var(--color-surface-ice) !important;
-            padding: 0.35rem 0.75rem !important;
+            padding: 0.75rem 1.1rem !important;
+            list-style: none !important;
+        }
+
+        [data-testid="stExpander"] summary::-webkit-details-marker {
+            display: none !important;
+        }
+
+        [data-testid="stExpander"] summary [data-testid="stIconMaterial"] {
+            flex-shrink: 0 !important;
+            color: var(--color-persian-blue) !important;
+            font-size: 20px !important;
+            width: 22px !important;
+            height: 22px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
 
         [data-testid="stExpander"] summary p {
+            margin: 0 !important;
+            font-family: var(--font-principal) !important;
             font-weight: 800 !important;
             color: var(--color-ink-dark) !important;
             font-size: 15px !important;
+            line-height: 1.35 !important;
+        }
+
+        [data-testid="stExpanderDetails"] {
+            padding: 0.9rem 1.15rem !important;
+            color: var(--color-body-text) !important;
         }
 
         /* 14. Divisores */
@@ -667,7 +726,7 @@ if archivo_pdf:
                     f"https://wa.me/?text={quote(texto_compartir)}",
                     use_container_width=True
                 )
-            
+
 
 # --- Preguntas frecuentes (texto visible para quien llega sin PDF) ---
 st.divider()
