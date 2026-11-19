@@ -521,7 +521,7 @@ st.info(
     """
     ### 🛡️ Qué hace y qué no hace
     * 🚫 **Sin inteligencia artificial:** reglas fijas en Python que puedes leer en el código.
-    * 🔒 **Sin base de datos:** el archivo se procesa en memoria y esta app no lo guarda. ¿Prefieres que no salga de tu computadora? Ejecútala en local; las instrucciones están en el README.
+    * 🔒 **Sin base de datos:** el archivo se procesa en memoria y esta app no lo guarda.
     * ✅ **Tapa:** números de 9 o más dígitos seguidos (CLABE, cuentas), RFC, correos y las palabras de tu lista negra.
     * 👀 **No tapa:** nombres que no estén en tu lista, direcciones, fechas ni importes. Revisa la vista previa antes de compartir.
     * 📄 **No devuelve un PDF tachado:** entrega texto (`.txt`) y coordenadas (`.json`).
